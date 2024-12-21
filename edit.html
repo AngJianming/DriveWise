@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Edit Page</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    input[type="text"], textarea {
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 15px;
+        padding: 8px;
+        font-size: 1rem;
+    }
+
+    textarea {
+        height: 150px;
+        resize: vertical;
+    }
+
+    .buttons {
+        margin-top: 20px;
+    }
+
+    button {
+        margin-right: 10px;
+        padding: 8px 16px;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+
+    .error {
+        color: red;
+        font-weight: bold;
+        margin-bottom: 10px;
+        display: none;
+    }
+
+</style>
+</head>
+<body>
+
+<h1>Edit Post</h1>
+<p>Use the fields below to update the title and content. You must have at least three words in each field before you can save.</p>
+
+<div class="error" id="errorMessage">Please ensure both the title and the content have at least 3 words each before saving.</div>
+
+<label for="postTitle">Title:</label>
+<input type="text" id="postTitle" value="My Wonderful Day">
+
+<label for="postContent">Content:</label>
+<textarea id="postContent">Today I went to the park and had a great time.</textarea>
+
+<div class="buttons">
+    <button type="button" id="resetBtn">Reset</button>
+    <button type="button" id="saveBtn">Save</button>
+</div>
+
+<script>
+    // Initial sample data
+    const initialTitle = "My Wonderful Day";
+    const initialContent = "Today I went to the park and had a great time.";
+
+    const titleField = document.getElementById('postTitle');
+    const contentField = document.getElementById('postContent');
+    const errorMessage = document.getElementById('errorMessage');
+
+    const resetBtn = document.getElementById('resetBtn');
+    const saveBtn = document.getElementById('saveBtn');
+
+    // Reset button click event - restore to initial sample data
+    resetBtn.addEventListener('click', function(){
+        titleField.value = initialTitle;
+        contentField.value = initialContent;
+        errorMessage.style.display = 'none';
+    });
+
+    // Save button click event - validate minimum word count before "saving"
+    saveBtn.addEventListener('click', function(){
+        const titleText = titleField.value.trim();
+        const contentText = contentField.value.trim();
+
+        const titleWords = titleText.split(/\s+/).filter(word => word.length > 0);
+        const contentWords = contentText.split(/\s+/).filter(word => word.length > 0);
+
+        if (titleWords.length < 3 || contentWords.length < 3) {
+            // Show error message if validation fails
+            errorMessage.style.display = 'block';
+        } else {
+            errorMessage.style.display = 'none';
+            // Here you would handle the "save" action, e.g., send data to server.
+            // For demonstration, we'll just log to console and alert.
+            console.log("Saved Title: ", titleText);
+            console.log("Saved Content: ", contentText);
+            alert("Your changes have been saved!");
+        }
+    });
+</script>
+
+</body>
+</html>

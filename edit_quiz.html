@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Edit Quiz (MCQ)</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        margin-top: 30em;
+    }
+
+    label {
+        display: block;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    input[type="text"], select {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+    }
+
+    .buttons {
+        margin-top: 20px;
+    }
+
+    button {
+        padding: 10px 15px;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    .error {
+        color: red;
+        font-weight: bold;
+        display: none;
+    }
+
+    .nav-links {
+        margin-top: 20px;
+    }
+
+    .nav-links a {
+        margin-right: 20px;
+        text-decoration: none;
+        color: blue;
+    }
+
+    .question-block {
+        margin-bottom: 30px;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 20px;
+    }
+</style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="educator_home.html">Educator Homepage</a> |
+            <a href="admin_home.html">Administrator Homepage</a> |
+            <a href="view_profile.php">View Profile</a> |
+            <a href="about_drivewise.html">About DriveWise</a> |
+            <a href="view_article.html">View Article</a> |
+            <a href="contact.php">Contact</a> |
+            <a href="video_learning.html">Video Learning</a> |
+            <a href="logout.php">Log Out</a>
+        </nav>
+    </header>
+
+<h1>Edit Quiz</h1>
+<p>Edit the multiple-choice quiz questions below. Each question must have 3 options, and you must select which one is correct. All fields are required. You cannot save if any field is empty.</p>
+
+<div class="error" id="errorMsg">Please fill out all fields before saving.</div>
+
+<form id="quizForm">
+    <div class="question-block">
+        <label for="q1Text">Question 1:</label>
+        <input type="text" id="q1Text" />
+
+        <label>Options for Question 1:</label>
+        <input type="text" id="q1o1" placeholder="Option 1" />
+        <input type="text" id="q1o2" placeholder="Option 2" />
+        <input type="text" id="q1o3" placeholder="Option 3" />
+
+        <label for="q1Correct">Correct Answer for Question 1:</label>
+        <select id="q1Correct">
+            <option value="">--Select Correct Option--</option>
+            <option value="0">Option 1</option>
+            <option value="1">Option 2</option>
+            <option value="2">Option 3</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <label for="q2Text">Question 2:</label>
+        <input type="text" id="q2Text" />
+
+        <label>Options for Question 2:</label>
+        <input type="text" id="q2o1" placeholder="Option 1" />
+        <input type="text" id="q2o2" placeholder="Option 2" />
+        <input type="text" id="q2o3" placeholder="Option 3" />
+
+        <label for="q2Correct">Correct Answer for Question 2:</label>
+        <select id="q2Correct">
+            <option value="">--Select Correct Option--</option>
+            <option value="0">Option 1</option>
+            <option value="1">Option 2</option>
+            <option value="2">Option 3</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <label for="q3Text">Question 3:</label>
+        <input type="text" id="q3Text" />
+
+        <label>Options for Question 3:</label>
+        <input type="text" id="q3o1" placeholder="Option 1" />
+        <input type="text" id="q3o2" placeholder="Option 2" />
+        <input type="text" id="q3o3" placeholder="Option 3" />
+
+        <label for="q3Correct">Correct Answer for Question 3:</label>
+        <select id="q3Correct">
+            <option value="">--Select Correct Option--</option>
+            <option value="0">Option 1</option>
+            <option value="1">Option 2</option>
+            <option value="2">Option 3</option>
+        </select>
+    </div>
+
+    <div class="buttons">
+        <button type="button" id="saveBtn">Save</button>
+        <button type="button" id="resetBtn">Reset to Default</button>
+    </div>
+</form>
+
+<div class="nav-links">
+    <a href="take_quiz.html">Go to Take Quiz</a>
+    <a href="quiz_result.html">Go to Quiz Result</a>
+</div>
+
+<script>
+    // Default quiz data
+    const defaultQuiz = {
+        questions: [
+            { 
+                text: "The Probationary Driving License (PDL) CANNOT be converted to a Competent Driving License (CDL) after exceeding a period of:", 
+                options: ["3 years", "2 years", "1 year"], 
+                correctAnswerIndex: 0 
+            },
+            { 
+                text: "The Competent Driving License (CDL) CANNOT be renewed after exceeding a period of:", 
+                options: ["3 years", "2 years", "1 year"], 
+                correctAnswerIndex: 0 
+            },
+            { 
+                text: "What is the minimum age requirement to apply for a Class B driving license?", 
+                options: ["16 years old", "17 years old", "18 years old"], 
+                correctAnswerIndex: 0
+            }
+        ]
+    };
+
+    // Load quiz from localStorage or fallback to default
+    let quizData = JSON.parse(localStorage.getItem('quizData')) || defaultQuiz;
+
+    // Populate fields
+    document.getElementById('q1Text').value = quizData.questions[0].text;
+    document.getElementById('q1o1').value = quizData.questions[0].options[0];
+    document.getElementById('q1o2').value = quizData.questions[0].options[1];
+    document.getElementById('q1o3').value = quizData.questions[0].options[2];
+    document.getElementById('q1Correct').value = quizData.questions[0].correctAnswerIndex.toString();
+
+    document.getElementById('q2Text').value = quizData.questions[1].text;
+    document.getElementById('q2o1').value = quizData.questions[1].options[0];
+    document.getElementById('q2o2').value = quizData.questions[1].options[1];
+    document.getElementById('q2o3').value = quizData.questions[1].options[2];
+    document.getElementById('q2Correct').value = quizData.questions[1].correctAnswerIndex.toString();
+
+    document.getElementById('q3Text').value = quizData.questions[2].text;
+    document.getElementById('q3o1').value = quizData.questions[2].options[0];
+    document.getElementById('q3o2').value = quizData.questions[2].options[1];
+    document.getElementById('q3o3').value = quizData.questions[2].options[2];
+    document.getElementById('q3Correct').value = quizData.questions[2].correctAnswerIndex.toString();
+
+    const saveBtn = document.getElementById('saveBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const errorMsg = document.getElementById('errorMsg');
+
+    saveBtn.addEventListener('click', function() {
+        // Gather values
+        const q1Text = document.getElementById('q1Text').value.trim();
+        const q1o1 = document.getElementById('q1o1').value.trim();
+        const q1o2 = document.getElementById('q1o2').value.trim();
+        const q1o3 = document.getElementById('q1o3').value.trim();
+        const q1Correct = document.getElementById('q1Correct').value;
+
+        const q2Text = document.getElementById('q2Text').value.trim();
+        const q2o1 = document.getElementById('q2o1').value.trim();
+        const q2o2 = document.getElementById('q2o2').value.trim();
+        const q2o3 = document.getElementById('q2o3').value.trim();
+        const q2Correct = document.getElementById('q2Correct').value;
+
+        const q3Text = document.getElementById('q3Text').value.trim();
+        const q3o1 = document.getElementById('q3o1').value.trim();
+        const q3o2 = document.getElementById('q3o2').value.trim();
+        const q3o3 = document.getElementById('q3o3').value.trim();
+        const q3Correct = document.getElementById('q3Correct').value;
+
+        // Validate
+        if (!q1Text || !q1o1 || !q1o2 || !q1o3 || q1Correct === "" ||
+            !q2Text || !q2o1 || !q2o2 || !q2o3 || q2Correct === "" ||
+            !q3Text || !q3o1 || !q3o2 || !q3o3 || q3Correct === "") {
+            errorMsg.style.display = 'block';
+        } else {
+            errorMsg.style.display = 'none';
+            const updatedQuiz = {
+                questions: [
+                    { text: q1Text, options: [q1o1, q1o2, q1o3], correctAnswerIndex: parseInt(q1Correct,10) },
+                    { text: q2Text, options: [q2o1, q2o2, q2o3], correctAnswerIndex: parseInt(q2Correct,10) },
+                    { text: q3Text, options: [q3o1, q3o2, q3o3], correctAnswerIndex: parseInt(q3Correct,10) },
+                ]
+            };
+            localStorage.setItem('quizData', JSON.stringify(updatedQuiz));
+            alert("Quiz updated successfully!");
+        }
+    });
+
+    resetBtn.addEventListener('click', function() {
+        localStorage.removeItem('quizData');
+        location.reload();
+    });
+</script>
+<script src="starry.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,168 @@
+/* style.css */
+
+/* Apply Times New Roman font to the entire document */
+body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle, #1c1f66 0%, #060822 100%);
+    overflow-x: hidden;
+    overflow-y: auto; 
+    font-family: 'Times New Roman', sans-serif;
+    color: white;
+    position: relative;
+
+    /* Center content horizontally and vertically */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    /* Ensure the content takes at least the full viewport height */
+    min-height: 100vh;
+
+    /* Set text color to white for better contrast against the dark background */
+    color: #ffffff;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    text-align: center;
+    background: rgba(10,10,40,0.9);
+    padding: 1em 0;
+    z-index: 9999; /* Ensures nav stays on top */
+}
+
+header h1 {
+    margin: 0;
+    color: #fff;
+}
+
+nav {
+    margin-top: 1em;
+    margin-bottom: 0;
+}
+
+nav a {
+    color: #ffffff;
+    text-decoration: none;
+    margin: 0 0.625em;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background-color: white;
+    border-radius: 50%;
+    box-shadow: 0 0 6px 2px rgba(255, 255, 255, 0.8);
+
+    /* Position the star randomly across the viewport */
+    top: calc(var(--random-y) * 1vh);
+    left: calc(var(--random-x) * 1vw);
+
+    /* Twinkle and optional movement animations */
+    animation: twinkle 2s infinite alternate;
+    animation-delay: calc(var(--random-delay) * 1s);
+    opacity: calc(var(--random-opacity));
+}
+
+@keyframes twinkle {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0.4;
+    }
+}
+
+   
+@keyframes moveStar {
+    from {
+        top: calc(var(--random-y) * 1vh);
+        left: calc(var(--random-x) * 1vw);
+    }
+     to {
+         top: calc(var(--random-y-end) * 1vh);
+         left: calc(var(--random-x-end) * 1vw);
+     }
+}
+
+/* Style the navigation menu */
+nav {
+    margin-bottom: 2em;
+}
+
+nav a {
+    color: #ffffff;
+    text-decoration: none;
+    margin: 0 0.625em; /* Equivalent to 10px if base font-size is 16px */
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* Style headings */
+h1 {
+    margin-bottom: 2em;
+    font-size: 2em; /* Scales with base font size */
+}
+
+/* Style forms and content containers */
+form, .content {
+    background: rgba(0, 0, 0, 0.6); /* Semi-transparent background for readability */
+    padding: 1.25em; /* Equivalent to 20px */
+    border-radius: 0.625em; /* Equivalent to 10px */
+    width: 90%;
+    max-width: 25em; /* Equivalent to 400px if base font-size is 16px */
+    box-sizing: border-box;
+}
+
+/* Style form inputs and textareas */
+input, textarea {
+    width: 100%;
+    padding: 0.625em; /* Equivalent to 10px */
+    margin-bottom: 0.9375em; /* Equivalent to 15px */
+    border: none;
+    border-radius: 0.3125em; /* Equivalent to 5px */
+    box-sizing: border-box;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1em; /* 16px if base font-size is 16px */
+}
+
+/* Style submit buttons */
+input[type="submit"] {
+    background-color: #4CAF50; /* Green background */
+    color: white;
+    cursor: pointer;
+    font-size: 1em; /* 16px */
+    padding: 0.625em; /* Equivalent to 10px */
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+/* Style the video element */
+video {
+    max-width: 90%;
+    height: auto;
+    border-radius: 0.625em; /* Equivalent to 10px */
+}
+
+/* Responsive adjustments */
+@media (max-width: 37.5em) { /* 600px if base font-size is 16px */
+    form, .content {
+        width: 95%;
+    }
+}
+
