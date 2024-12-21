@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Result (MCQ)</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .correct {
+            color: green;
+            font-weight: bold;
+        }
+
+        .wrong {
+            color: red;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            margin-top: 20px;
+        }
+
+        .nav-links a {
+            margin-right: 20px;
+            text-decoration: none;
+            color: blue;
+        }
+
+        .result-block {
+            margin-bottom: 30px;
+        }
+
+        .container {
+            background-color: rgba(10, 10, 40, 0.9);
+            padding: 30px 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            margin: 2em auto; /* Center the container and add space from the top */
+            text-align: center;
+            margin-top: 110em;
+        }
+
+        .container h1 {
+            color: #fff;
+            margin-top: 0;
+        }
+
+        .container p {
+            text-align: justify;
+            line-height: 1.6;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="take_quiz.html">Take Quiz</a> |
+            <a href="view_profile.php">View Profile</a> |
+            <a href="about_drivewise.html">About DriveWise</a> |
+            <a href="view_article.html">View Article</a> |
+            <a href="contact.php">Contact</a> |
+            <a href="video_learning.html">Video Learning</a> |
+            <a href="logout.php">Log Out</a>
+        </nav>
+    </header>
+    <div class ="container">
+        <h1>Quiz Result Page</h1>
+        <div id="resultContainer"></div>
+
+<script>
+    // Default quiz if none in localStorage
+    const defaultQuiz = {
+        questions: [
+            { text: "The Probationary Driving License (PDL) CANNOT be converted to a Competent Driving License (CDL) after exceeding a period of:", options: ["3 years", "2 years", "1 year"], correctAnswerIndex: 0 },
+            { text: "The Competent Driving License (CDL) CANNOT be renewed after exceeding a period of:", options: ["3 years", "2 years", "1 year"], correctAnswerIndex: 1 },
+            { text: "What is the minimum age requirement to apply for a Class B driving license?", options: ["16 years old", "17 years old", "18 years old"], correctAnswerIndex: 0 },
+            { text: "What rule must be followed by a Learner’s Driving License (LDL) holder while riding?", options: ["Carrying an identification card.", "Displaying the 'L' plate.", "Carrying passengers."], correctAnswerIndex: 0 },
+            { text: "What class of license is required for riding motorcycles?", options: ["Class B", "Class D", "Class E"], correctAnswerIndex: 0 },
+            { text: "What does the KEJARA system stand for?", options: ["Road Skill System", "Road Education System", "Road Safety System"], correctAnswerIndex: 0 },
+            { text: "Which of the following is considered a scheduled offense in the KEJARA system?", options: ["Driving above the speed limit.", "Driving an unregistered vehicle.", "Driving a vehicle without insurance coverage."], correctAnswerIndex: 0 },
+            { text: "Under the KEJARA system, which offense can cause a Probationary Driving License (PDL) to be revoked?", options: ["Using bald tires.", "Failing to obey traffic lights.", "Overtaking on a double line."], correctAnswerIndex: 0 },
+            { text: "If you want to ride a motorcycle with an engine capacity exceeding 500 cc, which class of license do you need?", options: ["Class B", "Class B2", "Class D"], correctAnswerIndex: 0 },
+            { text: "The requirement for motorcycle passengers riding with a Learner’s Driving License (LDL) holder is:", options: ["Displaying the 'L' plate on the left and right sides of the motorcycle.", "Displaying the 'P' plate at the front and rear of the motorcycle.", " Displaying the 'L' plate at the front and rear of the motorcycle."], correctAnswerIndex: 0 }
+        ]
+         
+    };
+
+    const quizData = JSON.parse(localStorage.getItem('quizData')) || defaultQuiz;
+    const userAnswers = JSON.parse(sessionStorage.getItem('userAnswers')) || [];
+
+    const resultContainer = document.getElementById('resultContainer');
+
+    if (userAnswers.length === quizData.questions.length) {
+        quizData.questions.forEach((q, index) => {
+            const userAnswerIndex = userAnswers[index];
+            const isCorrect = (userAnswerIndex === q.correctAnswerIndex);
+
+            const div = document.createElement('div');
+            div.className = 'result-block';
+
+            div.innerHTML = `
+                <p><strong>Question ${index+1}:</strong> ${q.text}</p>
+                <p><strong>Your Answer:</strong> ${q.options[userAnswerIndex]}</p>
+                <p><strong>Correct Answer:</strong> ${q.options[q.correctAnswerIndex]}</p>
+                <p class="${isCorrect ? 'correct' : 'wrong'}">${isCorrect ? 'Correct!' : 'Wrong!'}</p>
+            `;
+            resultContainer.appendChild(div);
+        });
+    } else {
+        // In case userAnswers not found or quiz not taken
+        const p = document.createElement('p');
+        p.textContent = "No quiz answers found. Please take the quiz first.";
+        resultContainer.appendChild(p);
+    }
+</script>
+<script src="starry.js"></script>
+</body>
+</html>

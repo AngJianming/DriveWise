@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Take Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .quiz-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #007BFF;
+        }
+        .question {
+            display: none;
+        }
+        .question.active {
+            display: block;
+        }
+        .question p {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .navigation {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .navigation button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 0 5px;
+        }
+        .navigation button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            display: none;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Take the Quiz</h1>
+        <form id="quiz-form">
+            <div id="quiz-questions"></div>
+            <div class="navigation">
+                <button type="button" id="prev-btn" disabled>Previous</button>
+                <button type="button" id="next-btn">Next</button>
+            </div>
+        </form>
+        <div class="result" id="result">
+            <h2>Your Score: <span id="score">0</span>/10</h2>
+        </div>
+    </div>
+
+    <script>
+        // Load questions from localStorage or fallback to an empty array
+        const questions = JSON.parse(localStorage.getItem('quizQuestions')) || [];
+
+        const quizQuestionsContainer = document.getElementById('quiz-questions');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const resultContainer = document.getElementById('result');
+        const scoreDisplay = document.getElementById('score');
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        // Render quiz questions dynamically
+        function renderQuiz() {
+            if (questions.length === 0) {
+                quizQuestionsContainer.innerHTML = '<p>No questions available. Please contact your instructor.</p>';
+                prevBtn.style.display = 'none';
+                nextBtn.style.display = 'none';
+                return;
+            }
+
+            quizQuestionsContainer.innerHTML = questions.map((q, index) => `
+                <div class="question" id="question-${index}">
+                    <p>${index + 1}. ${q.question}</p>
+                    ${q.options.map((option, optIndex) => `
+                        <label>
+                            <input type="radio" name="q${index}" value="${String.fromCharCode(65 + optIndex)}">
+                            ${option}
+                        </label>
+                    `).join('')}
+                </div>
+            `).join('');
+        }
+
+        renderQuiz();
+
+        const questionElements = document.querySelectorAll('.question');
+        if (questionElements.length > 0) {
+            questionElements[currentQuestion].classList.add('active');
+        }
+
+        function updateQuestionDisplay() {
+            questionElements.forEach((q, index) => {
+                q.classList.toggle('active', index === currentQuestion);
+            });
+            prevBtn.disabled = currentQuestion === 0;
+            nextBtn.textContent = currentQuestion === questions.length - 1 ? 'Submit' : 'Next';
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                updateQuestionDisplay();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                updateQuestionDisplay();
+            } else {
+                const formData = new FormData(document.getElementById('quiz-form'));
+                score = 0;
+                questions.forEach((q, index) => {
+                    if (formData.get(`q${index}`) === q.correct) score++;
+                });
+
+                document.getElementById('quiz-form').style.display = 'none';
+                resultContainer.style.display = 'block';
+                scoreDisplay.textContent = score;
+            }
+        });
+
+        updateQuestionDisplay();
+    </script>
+</body>
+</html>

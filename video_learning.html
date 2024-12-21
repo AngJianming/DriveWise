@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Learning Page</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        .container {
+            background-color: rgba(10, 10, 40, 0.9);
+            padding: 30px 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            margin: 2em auto; /* Side margins to center */
+            margin-top: 30em; /* This pushes the container below the fixed header */
+            text-align: center;
+        }
+
+        .container h1 {
+            color: #fff;
+            margin-top: 0;
+        }
+
+        .container p {
+            text-align: justify;
+            line-height: 1.6;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Video Learning</h1>
+        <nav>
+            <a href="index.html">Homepage</a> |
+            <a href="student_home.html">Student Homepage</a> |
+            <a href="educator_home.html">Educator Homepage</a> |
+            <a href="admin_home.html">Administrator Homepage</a> |
+            <a href="about_drivewise.html">About DriveWise</a> |
+            <a href="logout.php">Log Out</a>
+            </nav>
+    </header>
+    
+    <!-- Responsive video container (optional) -->
+    <div class="container">
+        <h3>1. How To Drive A Manual Transmission Car</h3>
+        <!-- Use iframe for YouTube embedding -->
+        <iframe 
+            width="400" 
+            height="238" 
+            src="https://www.youtube.com/embed/VIVaqt4VhKc"
+            title="YouTube video player" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            allowfullscreen>
+        </iframe>
+        <h3>2. How To Drive An Automatic Transmission Car</h3>
+        <iframe 
+            width="400" 
+            height="238" 
+            src="https://www.youtube.com/embed/kTZCinivLco"
+            title="YouTube video player" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            allowfullscreen>
+        </iframe>
+        <h3>3. How To Use Your Side Mirrors To Reverse</h3>
+        <iframe 
+            width="400" 
+            height="238" 
+            src="https://www.youtube.com/embed/w7m0DuL6REw"
+            title="YouTube video player" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            allowfullscreen>
+        </iframe>
+    </div>
+    <script src='starry.js'></script>
+</body>
+</html>
+
